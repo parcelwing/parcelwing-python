@@ -8,7 +8,7 @@ from urllib.parse import urlencode
 
 import httpx
 
-from .errors import ParcelWingError, ParcelWingErrorType
+from .errors import ParcelWingError
 
 SDK_VERSION = "0.1.0"
 DEFAULT_BASE_URL = "https://parcelwing.com"
