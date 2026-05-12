@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import builtins
 from typing import Any, Dict, List, Mapping, Sequence, Union
 from urllib.parse import quote
 
@@ -25,7 +26,15 @@ class ContactsResource:
             body = [dict(item) for item in contact]
 
         response = self._http.request("POST", "/api/contacts", json_body=body)
-        return response.get("data")
+        data = response.get("data")
+
+        if isinstance(data, builtins.list):
+            return [dict(item) for item in data if isinstance(item, Mapping)]
+
+        if isinstance(data, Mapping):
+            return dict(data)
+
+        return {}
 
     def get(self, contact_id: str) -> Dict[str, Any]:
         response = self._http.request(
